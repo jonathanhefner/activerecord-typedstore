@@ -87,7 +87,7 @@ module ActiveRecord::TypedStore
       # with existing records that may have been persisted with a `NULL` store
       # We use `blank?` as an heuristic to detect these.
       super | self.class.typed_stores.keys.map(&:to_s).select do |store|
-        @attributes.key?(store) && @attributes[store].value_before_type_cast.blank?
+        has_attribute?(store) && read_attribute_before_type_cast(store).blank?
       end
     end
   end
